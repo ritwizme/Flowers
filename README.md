@@ -1,4 +1,4 @@
-# Flowersconvolutional neural network
+# Flowers
 The code given in cnn.py helps to recognise dead and fresh roses with the help of a convolutional neural network.
 
 Libraries required: Keras
