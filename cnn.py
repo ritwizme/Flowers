@@ -1,28 +1,29 @@
-#building the CNN
+ #building the CNN
 from keras.models import Sequential
-from keras.layers import Conv2D
-from keras.layers import MaxPooling2D 
-from keras.layers import Flatten
 from keras.layers import Dense
+from keras.layers import Conv2D
+from keras.layers import Flatten
+from keras.layers import MaxPooling2D 
+
 
 #initializing CNN
 
-classifier = Sequential()
-#classifier.add(Convolution2D(32, 3, 3, input_shape = (64,64,3),activation='relu'))
-classifier.add(Conv2D(32, (3, 3), input_shape=(64, 64, 3), activation="relu"))
+cf = Sequential()
 
-classifier.add(MaxPooling2D(pool_size = (2, 2)))
+cf.add(Conv2D(32, (3, 3), input_shape=(64, 64, 3), activation="relu"))
 
-classifier.add(Conv2D(32, (3, 3), activation="relu"))
+cf.add(MaxPooling2D(pool_size = (2, 2)))
 
-classifier.add(MaxPooling2D(pool_size = (2, 2)))
+cf.add(Conv2D(32, (3, 3), activation="relu"))
 
-classifier.add(Flatten())
+cf.add(MaxPooling2D(pool_size = (2, 2)))
 
-classifier.add(Dense(units = 128, activation = 'relu'))
-classifier.add(Dense(units = 1, activation = 'sigmoid'))
+cf.add(Flatten())
 
-classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
+cf.add(Dense(units = 128, activation = 'relu'))
+cf.add(Dense(units = 1, activation = 'sigmoid'))
+
+cf.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
 
 
 from keras.preprocessing.image import ImageDataGenerator
@@ -40,15 +41,15 @@ training_set = train_datagen.flow_from_directory('./dataset/train_set',
                                                 batch_size=32,
                                                 class_mode='binary')
 
-test_set = test_datagen.flow_from_directory('./dataset/test_set',
+test = test_datagen.flow_from_directory('./dataset/test_set',
                                             target_size=(64, 64),
                                             batch_size=32,
                                             class_mode='binary')
 
-classifier.fit_generator(training_set,
+cf.fit_generator(training_set,
                          steps_per_epoch=400,
-                         epochs=5,
-                         validation_data=test_set,
+                         epochs=10,
+                         validation_data=test,
                          validation_steps=40)
 
 
